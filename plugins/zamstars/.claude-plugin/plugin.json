@@ -1,0 +1,8 @@
+{
+  "name": "zamstars",
+  "displayName": "Zamstars Ops",
+  "description": "Zamstars operating layer: catchup / handoff / decision rituals, onboarding, grooming, and codebase structure rules for shared app repos.",
+  "version": "1.0.0",
+  "author": { "name": "Manthan Gohil" },
+  "keywords": ["zamstars", "collaboration", "git", "onboarding"]
+}
