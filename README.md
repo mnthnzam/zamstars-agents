@@ -1,42 +1,59 @@
-# zamstars-claude
+# zamstars-agents
 
-The Claude skills and templates Zamstars uses so people on separate Claude accounts can work on
-the same app repos without losing context.
+How Zamstars people on different AI agents and different accounts work on the same app repos
+without losing context. Works with any agent that reads `AGENTS.md` — Codex, Cursor, Copilot,
+Gemini CLI, Zed, Windsurf, JetBrains — and with Claude Code via `CLAUDE.md`.
 
-## Install (once per person)
+## The idea
 
-In Claude Code:
+**The rules live in the repo, not in the agent.** Every Zamstars app carries an `AGENTS.md`
+(always-on rules, ~80 lines) and a `docs/agent/` folder (one file per ritual, opened on demand
+when the user says the word). Clone the repo and any agent already knows the system. Nothing to
+install.
 
-```
-/plugin marketplace add mnthnzam/zamstars-claude
-/plugin install zamstars@zamstars
-```
+| Say | The agent opens | When |
+|---|---|---|
+| `setup` | `docs/agent/SETUP.md` | first time on a repo |
+| `catchup` | `docs/agent/CATCHUP.md` | start of every session |
+| `handoff` | `docs/agent/HANDOFF.md` | end of every session |
+| `decision` | `docs/agent/DECISION.md` | whenever a real choice is made |
+| `groom` | `docs/agent/GROOM.md` | occasionally |
 
-You need read access to this repo (ask Manthan to add you as a collaborator) and git must be
-logged in to GitHub — `gh auth login` is the easy way. Then, in any Zamstars app repo, say
-`setup` the first time and `catchup` / `handoff` every session after.
-
-To pick up updates later: `/plugin marketplace update zamstars`.
-
-## What's in here
+## What's in this repo
 
 | Path | What |
 |---|---|
-| `plugins/zamstars/skills/zamstars-ops/` | The everyday skill — `catchup`, `handoff`, `decision`. Core conventions. |
-| `plugins/zamstars/skills/zamstars-setup/` | Onboarding from zero, joining or starting a repo, scaffolding. |
-| `plugins/zamstars/skills/zamstars-groom/` | The deliberate maintenance pass. |
-| `templates/` | The operating-layer files every app repo carries. |
-| `SYSTEM.md` | Why the system is shaped the way it is — every decision and its reasoning. |
+| `agent/` | **The canonical source.** `AGENTS.md`, `CLAUDE.md` (a one-line import), per-tool pointer files, `docs/agent/*.md`. This is what gets copied into every app repo. |
+| `templates/` | The other files every app repo carries: README, STATE, DECISIONS, LEDGER, ONBOARDING. |
+| `skills/` | **Generated** from `agent/` by `build.sh`. Agent Skills standard (`SKILL.md`) for agents that support it. Do not edit by hand. |
+| `SYSTEM.md` | Every design decision and why. |
+| `build.sh` | Regenerates `skills/` from `agent/`. |
 
-## The system in one paragraph
+## Using it on an app
 
-One repo per app. The repo is the source of truth; Claude is an editor, never a store. Four files
-at the root of every app — `README.md`, `DECISIONS.md`, `STATE.md`, `CLAUDE.md` — plus a ledger
-under `docs/`. Two rituals: `catchup` at the start of a session, `handoff` at the end. Say
-`decision` when a real choice is made. No Claude Artifacts. Code is structured so a developer can
-be handed it without apology. `SYSTEM.md` has the rest.
+**New app or existing repo:** copy `agent/*` (including dotfiles) into the repo root, and the
+files from `templates/` you don't already have. Then say `setup` to your agent. SETUP.md walks
+through the rest, including retrofitting an existing codebase.
 
-## Updating the skills
+## Optional: install the skills (an accelerator, not a requirement)
 
-Skills are edited by Manthan in Claude, then copied here and pushed. Bump `version` in both
-`.claude-plugin/marketplace.json` and `plugins/zamstars/.claude-plugin/plugin.json` when you do.
+Skills give you the rituals even outside a repo — useful for scaffolding a new app, or for agents
+like Claude Cowork that don't auto-read repo files. The repo's own `AGENTS.md` always wins if
+both exist.
+
+| Agent | How |
+|---|---|
+| Claude Code | `/plugin marketplace add mnthnzam/zamstars-agents` then `/plugin install zamstars@zamstars` |
+| Codex CLI | copy `skills/*` into `~/.codex/skills/` |
+| Cursor | copy `skills/*` into the repo's `.cursor/skills/` |
+| Gemini CLI | copy `skills/*` into `~/.gemini/skills/` |
+| Claude Cowork | add each `skills/*/SKILL.md` as a skill in the app |
+
+Private repo: you need collaborator access and git logged in to GitHub (`gh auth login`).
+
+## Editing the system
+
+Edit files under `agent/` only. Run `bash build.sh`. Bump `version` in both
+`.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json`. Commit and push. App repos
+pick up changes when someone copies `agent/*` in again — `groom` flags when a repo's copy is
+behind.

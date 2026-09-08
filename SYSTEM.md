@@ -299,3 +299,30 @@ convention, so a rule changes in one place. `ops` routes to the other two by tri
 user never has to know which skill they need.
 
 A newcomer needs `zamstars-ops` + `zamstars-setup`. `zamstars-groom` can come later.
+
+## Universal across agents (decided 2026-09-08)
+
+The system now lives **in the repo, not in the agent.** Verified from official docs: Claude Code
+does not read `AGENTS.md`; the sanctioned bridge is a `CLAUDE.md` containing `@AGENTS.md`.
+Codex, Cursor, Copilot, Gemini CLI, Zed, Windsurf, JetBrains and others read `AGENTS.md`
+natively. Claude Code wants instruction files under ~200 lines, imports included.
+
+So every app repo carries:
+- `AGENTS.md` (~80 lines) — always-on: file map, hard rules, code rules, git-mode rule, and a
+  **trigger table**: "when the user says X, open `docs/agent/X.md` and follow it exactly."
+- `docs/agent/` — `SETUP`, `CATCHUP`, `HANDOFF`, `DECISION`, `GROOM`, `SHAPES`. Opened on demand.
+  This is how skills work, done with plain files any agent can read.
+- Pointer files, two lines each: `CLAUDE.md` (`@AGENTS.md`), `GEMINI.md`,
+  `.cursor/rules/zamstars.mdc`, `.github/copilot-instructions.md`, `.windsurf/rules/zamstars.md`.
+- App-specific rules moved **into `AGENTS.md`** so every tool sees them; `CLAUDE.md` is a pure import.
+
+Git modes collapsed to two: `direct` (agent runs shell on the user's machine) and `terminal`
+(agent hands over commands). `shell` mode is gone — the user does not want the Cowork sandbox
+running git, and it could not commit anyway (cannot unlink `index.lock` without a delete grant).
+
+`skills/` is **generated** from `agent/` by `build.sh` — Agent Skills standard, installable in
+Claude Code (plugin marketplace, source `./`), Codex, Cursor, Gemini CLI. Each generated skill
+opens with: *if the repo has `AGENTS.md`, it is authoritative and may be newer than this skill.*
+Repo beats installed skill, always — that is the drift rule.
+
+Repo renamed `zamstars-claude` → `zamstars-agents`; the old folder is in `_to_delete/`.

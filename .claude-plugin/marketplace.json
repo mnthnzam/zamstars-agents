@@ -4,11 +4,11 @@
   "plugins": [
     {
       "name": "zamstars",
-      "source": "./plugins/zamstars",
-      "description": "Zamstars operating layer: catchup / handoff / decision rituals, onboarding, grooming, and codebase structure rules for shared app repos.",
-      "version": "1.0.0",
+      "source": "./",
+      "description": "Zamstars operating layer: setup / catchup / handoff / decision / groom rituals and codebase structure rules for shared app repos.",
+      "version": "2.0.0",
       "author": { "name": "Manthan Gohil" },
-      "keywords": ["zamstars", "collaboration", "git", "onboarding"]
+      "keywords": ["zamstars", "collaboration", "git", "onboarding", "agents-md"]
     }
   ]
 }
