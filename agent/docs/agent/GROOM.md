@@ -17,9 +17,11 @@ rather than making them.**
 4. **Audit app-specific rules in AGENTS.md.** Any rule not referenced by a commit message or a
    DECISIONS entry in six months is a candidate for removal. `git log --grep` on a keyword from
    the rule is a cheap proxy.
-5. **Structure sweep** — the handoff `find … wc -l` check over the whole tree, plus a look for
-   imports pointing sideways between `features/*` or upward. Report violations as candidates
-   for `Broken / risky` bullets, not as things to fix now.
+5. **Structure sweep** — run the check in `docs/agent/STRUCTURE.md` over the whole tree, minus
+   its exemptions, plus a look for imports pointing sideways between `features/*` or upward.
+   Also check the trend: a file that was 180 lines last groom and is 195 now will trip next
+   month, and splitting it now is cheaper than splitting it under pressure. Report violations
+   as candidates for `Broken / risky` bullets, not as things to fix now.
 6. **Propose; do not apply.** One numbered list: what you would cut, move, mark, split or
    rewrite, one line of reasoning each, grouped by file. Wait for approval by number. Apply
    exactly those.

@@ -2,7 +2,7 @@
 
 How Zamstars people on different AI agents and different accounts work on the same app repos
 without losing context. Works with any agent that reads `AGENTS.md` — Codex, Cursor, Copilot,
-Gemini CLI, Zed, Windsurf, JetBrains — and with Claude Code via `CLAUDE.md`.
+Gemini CLI, Antigravity, Zed, Windsurf, JetBrains — and with Claude Code via `CLAUDE.md`.
 
 ## The idea
 
@@ -47,9 +47,20 @@ both exist.
 | Codex CLI | copy `skills/*` into `~/.codex/skills/` |
 | Cursor | copy `skills/*` into the repo's `.cursor/skills/` |
 | Gemini CLI | copy `skills/*` into `~/.gemini/skills/` |
+| Antigravity | copy `skills/*` into `~/.gemini/config/skills/` (all workspaces) or the repo's `.agents/skills/` |
 | Claude Cowork | add each `skills/*/SKILL.md` as a skill in the app |
 
 Private repo: you need collaborator access and git logged in to GitHub (`gh auth login`).
+
+## This repo runs its own system
+
+`AGENTS.md`, `DECISIONS.md`, `STATE.md` and `docs/LEDGER.md` at the root govern work on the
+operating layer itself — say `catchup` here like you would in any app repo. The rituals it points
+at are `agent/docs/agent/*.md`, the same files apps get, so there is no second copy to drift.
+`SYSTEM.md` is frozen background; new reasoning goes in `DECISIONS.md`.
+
+Do not confuse root `AGENTS.md` (rules for editing this repo) with `agent/AGENTS.md` (the
+template copied into app repos). Changing how apps behave means editing the second one.
 
 ## Editing the system
 

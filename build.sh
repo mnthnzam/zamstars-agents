@@ -19,8 +19,8 @@ emit() { # name description files...
 }
 
 emit zamstars-ops \
-  "Zamstars everyday operating layer. Use when the user says catchup / sync in, handoff / wrap up, or decision, or is working inside a Zamstars app repo. Start- and end-of-session git rituals in direct or terminal mode, decisions captured as they happen, codebase structure limits. Core conventions." \
-  agent/AGENTS.md "$A/SHAPES.md" "$A/CATCHUP.md" "$A/HANDOFF.md" "$A/DECISION.md"
+  "Zamstars everyday operating layer. Use when the user says catchup / sync in, handoff / wrap up, or decision, or is working inside a Zamstars app repo. Start- and end-of-session git rituals in direct or terminal mode, decisions captured as they happen, codebase structure limits and how to split a file without making it worse. Core conventions." \
+  agent/AGENTS.md "$A/SHAPES.md" "$A/STRUCTURE.md" "$A/CATCHUP.md" "$A/HANDOFF.md" "$A/DECISION.md"
 
 emit zamstars-setup \
   "Zamstars onboarding and scaffolding. Use when the user says setup / onboard me / first time / I'm new, wants to start a new Zamstars app or join one, or when pre-flight fails. Walks a newcomer from zero, picks the git mode, tests access before cloning, retrofits or scaffolds the operating layer." \
@@ -28,6 +28,6 @@ emit zamstars-setup \
 
 emit zamstars-groom \
   "Zamstars maintenance pass. Use when the user says groom, 'is this repo rotting', or when catchup reports STATE.md stale by more than two weeks. Full decay pass, Revisit-if and Where checks on every active decision, propose-don't-apply." \
-  "$A/GROOM.md" "$A/SHAPES.md"
+  "$A/GROOM.md" "$A/SHAPES.md" "$A/STRUCTURE.md"
 
 rm -f "$TMP"

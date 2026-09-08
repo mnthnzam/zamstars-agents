@@ -4,14 +4,13 @@
    cannot surprise anyone.
 1. `git status --short`, `git diff`, `git diff --cached`. Summarize **what changed** from the
    diff, not from memory of the session.
-2. **Structure check.** From the repo root:
-   ```
-   find src -type f \( -name '*.ts' -o -name '*.tsx' -o -name '*.js' -o -name '*.jsx' -o -name '*.css' \) -exec wc -l {} + | sort -rn | head -20
-   ```
-   Over 300 lines: split now, before committing — not a follow-up. Over 200: say so, propose the
-   split, proceed only if the user declines, and record that as a DECISIONS entry. Also flag:
-   logic in a UI component, inline `<script>`/`<style>`, `onclick=`, a hardcoded secret, an import
-   pointing sideways between features or upward.
+2. **Structure check — open `docs/agent/STRUCTURE.md` and follow it.** It carries the command,
+   the exempt files, and how to split. In short: over 300 lines, split before committing, not as
+   a follow-up; over 200, propose the split and record a DECISIONS entry if the user declines.
+   Check the list against the exemptions before reporting — flagging a generated types file
+   teaches the team to ignore you. Also flag: logic in a UI component, inline `<script>`/
+   `<style>`, `onclick=`, a hardcoded secret, an import pointing sideways between features or
+   upward.
 3. **Decay check** against the thresholds in `docs/agent/SHAPES.md`. Raise only what tripped;
    say nothing about what passed. Also cross-check README: do the "Run it" scripts exist in
    `package.json`? Do `.env.example` vars match what the code reads (`import.meta.env` /

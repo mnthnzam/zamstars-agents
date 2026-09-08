@@ -15,6 +15,7 @@ one-off pages — apps are normal repos built to be handed to a developer withou
 | `docs/ONBOARDING.md` | What does a newcomer need before their first session? | Edited rarely |
 
 Shapes for STATE, DECISIONS and LEDGER entries: `docs/agent/SHAPES.md`.
+Limits and layout for the code itself: `docs/agent/STRUCTURE.md`.
 
 ## Rituals — when the user says a word, open the file and follow it exactly
 
@@ -61,7 +62,7 @@ Do not improvise a ritual from memory. Open the file.
 ## Code rules — hard limits, checked at every handoff
 
 - No source file over **200 lines** (fail at 300). No function over **50 lines**.
-- One exported thing per file, named the same as the file.
+- One exported thing per file, named the same as the file. `src/types/` is exempt.
 - No business logic in UI components — components render and call; logic lives in `lib/` or the
   feature's own module.
 - No inline `<script>`/`<style>`, no `onclick=`.
@@ -70,6 +71,11 @@ Do not improvise a ritual from memory. Open the file.
 - `features/` is the default home; `components/` only for things used by 2+ features.
 - Secrets in `.env` only. `.env.example` committed, `.env` never.
 - Default stack: Vite + React + TypeScript + Tailwind; Supabase for data and auth.
+
+**Before enforcing a limit, splitting a file, or claiming one is too long, open
+`docs/agent/STRUCTURE.md`** — it carries what the numbers are for, the exempt files, how to
+split without making it worse, and what to do when someone declines. A split made without
+reading it is usually a bad split.
 
 ## App-specific rules
 

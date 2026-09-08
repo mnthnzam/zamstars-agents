@@ -1,5 +1,12 @@
 # Zamstars operating layer — system skeleton
 
+> **Frozen background, 2026-09-08.** This is the narrative record of the design sessions that
+> produced the system, kept because the arguments in it are worth reading. It is **not** the
+> decision record: no tags, no status lines, no `Revisit if`, and it only grows. The record is
+> `DECISIONS.md`; entries there link back to sections here. **Do not append to this file.**
+> Parts of it describe superseded designs (three git modes, `CLAUDE.md` as the always-on file) —
+> where it disagrees with `agent/AGENTS.md` or `DECISIONS.md`, those win.
+
 One repo per app. The repo is the source of truth. Claude is an editor, never a store.
 
 ## The four files (repo root)
