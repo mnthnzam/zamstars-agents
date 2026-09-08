@@ -6,7 +6,7 @@
       "name": "zamstars",
       "source": "./",
       "description": "Zamstars operating layer: setup / catchup / handoff / decision / groom rituals and codebase structure rules for shared app repos.",
-      "version": "2.1.0",
+      "version": "2.2.0",
       "author": { "name": "Manthan Gohil" },
       "keywords": ["zamstars", "collaboration", "git", "onboarding", "agents-md"]
     }
