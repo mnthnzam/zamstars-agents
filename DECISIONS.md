@@ -22,6 +22,35 @@ The only permitted change to a past entry is a status line at its top:
 
 ---
 
+## 2026-09-08 [process] — Source files may run to 500 lines, hard fail at 800
+**Context:** 200/300 was set before any Zamstars app existed. It fires on JSX-heavy page
+components that are long without being complex, and a limit that fires on every form teaches the
+team to ignore every limit. No file has actually tripped it yet — the largest in `daily-tracker`
+is 28 lines.
+**Chose:** 500 propose / 800 hard fail, globally. The 50-line function rule stays and becomes the
+primary readability check. STRUCTURE.md's rationale was rewritten to say what the count now does:
+catch a runaway file, not protect readability. One-reason-to-change, downward imports and
+no-logic-in-components carry that instead.
+**Rejected:** raise it per repo in app-specific rules once a real file tripped — the sanctioned
+path, but no file has tripped and waiting costs a scaffold cycle. Split by kind (200/300 for
+`.ts`, 400/500 for `.tsx`) — two numbers to remember and a judgment call at every boundary.
+**Revisit if:** two files in one repo cross 500 in the same month and nobody proposes a split.
+**Where:** `agent/AGENTS.md`, `agent/docs/agent/STRUCTURE.md`, `agent/docs/agent/HANDOFF.md`
+
+## 2026-09-08 [process] — Catchup routes between repos before it acts on one
+**Context:** CATCHUP.md was cwd-bound: one repo, one `Active:` line, one staleness check. With
+several apps running, "catchup" from the parent folder failed pre-flight and routed to SETUP —
+wrong door — and the staleness check, the system's main enforcement, only ever fired on a repo
+someone had already opened. The repo rotting hardest is the one nobody opens.
+**Chose:** step 0.5 scans sibling folders for `docs/agent/CATCHUP.md`, prints repo / state date /
+code date / Active, and either asks which to enter or carries the list into the step 6 report as
+an "other repos going stale" line. Derived from the filesystem each run.
+**Rejected:** a `PROJECTS.md` registry — state living outside every repo, which contradicts "the
+repo is the source of truth" and rots the moment someone forgets to update it. Matching on the
+AGENTS.md title string — `zamstars-agents`' own title differs, and a string is fragile.
+**Revisit if:** apps stop being siblings one level under a shared parent.
+**Where:** `agent/docs/agent/CATCHUP.md`
+
 ## 2026-09-08 [process] — The line limits get their own on-demand doc, not more lines in AGENTS.md
 **Context:** "No file over 200 lines" was one bullet with no rationale, no exemptions and no
 guidance on how to split. Agents were flagging generated files, and a bad split is worse than no

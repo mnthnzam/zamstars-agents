@@ -69,7 +69,7 @@ Do not improvise a ritual from memory. Open the file.
 
 ## Code rules — hard limits, checked at every handoff
 
-- No source file over **200 lines** (fail at 300). No function over **50 lines**.
+- No source file over **500 lines** (fail at 800). No function over **50 lines**.
 - One exported thing per file, named the same as the file. `src/types/` is exempt.
 - No business logic in UI components — components render and call; logic lives in `lib/` or the
   feature's own module.
@@ -170,31 +170,36 @@ DECISIONS >800 lines or 40 entries = archive superseded/obsolete/rejected to
 ## Why there is a limit at all
 
 Zamstars apps get handed to developers. The thing developers refuse to inherit is not a big
-codebase, it is a file nobody can hold in their head — the 900-line `App.tsx` where every
-feature touches every other one. That file is also the file an agent cannot edit surgically:
-asked to change one thing it rewrites the whole file, and the diff is unreviewable, so nobody
-reviews it, so the next agent inherits whatever the last one guessed.
+codebase, it is a file nobody can hold in their head — the `App.tsx` where every feature touches
+every other one, so no change is local and no diff is reviewable.
 
-The limits exist to keep two things true: **a human who did not write the file can read it in
-one sitting**, and **an agent can change part of it without rewriting all of it.**
+**The line count is the weakest of the rules here, and it got weaker when the numbers went up.**
+At 500 nobody reads a file in one sitting, so the count no longer protects readability; it only
+catches a file that has run away entirely. What actually keeps a file inheritable at this size is
+the rest of this document — **one reason to change**, **imports pointing downward only**, **no
+logic in components**, and the **50-line function** rule. Those do the work now. Treat a file
+that passes the count but fails those as failing.
 
 ## The numbers
 
 | Limit | Threshold | What happens |
 |---|---|---|
-| Source file | **200 lines** | Say so, propose the split. Proceed only if the user declines — and record the decline as a DECISIONS entry. |
-| Source file | **300 lines** | Hard fail. Split before committing, not as a follow-up. |
-| Function | **50 lines** | Same as 200: propose, don't force. |
+| Source file | **500 lines** | Say so, propose the split. Proceed only if the user declines — and record the decline as a DECISIONS entry. |
+| Source file | **800 lines** | Hard fail. Split before committing, not as a follow-up. |
+| Function | **50 lines** | Same as 500: propose, don't force. The one that carries the most weight now. |
 | Exports per file | **1** | Named the same as the file. `types/` is exempt (below). |
 
-200 is about three screens — roughly what a reviewer holds in working memory before they start
-scrolling back. 300 is where "I'll read it later" becomes "I'll trust it." Neither number is
-sacred; they are the point where a conversation should happen, not a law of nature.
+500 was chosen (2026-09-08) over the original 200 because a page component that is mostly JSX is
+long without being complex, and a limit that fires on every form teaches the team to ignore every
+limit. The cost is real and worth naming: a 500-line file is not readable in one sitting, and 800
+is a file a reviewer will skim rather than read. These are runaway detectors, not readability
+guarantees. Neither number is sacred; they are the point where a conversation should happen, not
+a law of nature.
 
 ## The limit is a proxy, and it is gameable
 
-Line count measures size, not the thing that actually matters. **Two 130-line files that must
-always be edited together are worse than one 260-line file** — you have paid the cost of a split
+Line count measures size, not the thing that actually matters. **Two 300-line files that must
+always be edited together are worse than one 600-line file** — you have paid the cost of a split
 and bought nothing, and now the reader has to hold two files instead of one.
 
 The rule the count is standing in for: **a file has one reason to change.** When the count trips,
@@ -244,7 +249,8 @@ Read the top of that list against the exemption list before reporting anything.
 
 **Known weakness:** there is no cheap portable command for the 50-line function rule, so it is
 checked by eye on the longest files from the list above. It is therefore the limit most likely
-to rot. If a file is under 200 lines and still unreadable, one giant function is usually why.
+to rot. If a file is under 500 lines and still unreadable, one giant function is usually why —
+and at these thresholds that is the common case, not the rare one.
 
 ## Import direction
 
@@ -334,8 +340,8 @@ overrides teaches that all the rules are optional.
 1. `git status --short`, `git diff`, `git diff --cached`. Summarize **what changed** from the
    diff, not from memory of the session.
 2. **Structure check — open `docs/agent/STRUCTURE.md` and follow it.** It carries the command,
-   the exempt files, and how to split. In short: over 300 lines, split before committing, not as
-   a follow-up; over 200, propose the split and record a DECISIONS entry if the user declines.
+   the exempt files, and how to split. In short: over 800 lines, split before committing, not as
+   a follow-up; over 500, propose the split and record a DECISIONS entry if the user declines.
    Check the list against the exemptions before reporting — flagging a generated types file
    teaches the team to ignore you. Also flag: logic in a UI component, inline `<script>`/
    `<style>`, `onclick=`, a hardcoded secret, an import pointing sideways between features or

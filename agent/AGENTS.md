@@ -61,7 +61,7 @@ Do not improvise a ritual from memory. Open the file.
 
 ## Code rules — hard limits, checked at every handoff
 
-- No source file over **200 lines** (fail at 300). No function over **50 lines**.
+- No source file over **500 lines** (fail at 800). No function over **50 lines**.
 - One exported thing per file, named the same as the file. `src/types/` is exempt.
 - No business logic in UI components — components render and call; logic lives in `lib/` or the
   feature's own module.

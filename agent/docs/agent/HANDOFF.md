@@ -5,8 +5,8 @@
 1. `git status --short`, `git diff`, `git diff --cached`. Summarize **what changed** from the
    diff, not from memory of the session.
 2. **Structure check — open `docs/agent/STRUCTURE.md` and follow it.** It carries the command,
-   the exempt files, and how to split. In short: over 300 lines, split before committing, not as
-   a follow-up; over 200, propose the split and record a DECISIONS entry if the user declines.
+   the exempt files, and how to split. In short: over 800 lines, split before committing, not as
+   a follow-up; over 500, propose the split and record a DECISIONS entry if the user declines.
    Check the list against the exemptions before reporting — flagging a generated types file
    teaches the team to ignore you. Also flag: logic in a UI component, inline `<script>`/
    `<style>`, `onclick=`, a hardcoded secret, an import pointing sideways between features or
