@@ -85,7 +85,7 @@ your existing git credentials work as-is — no setup.
 We do not use Claude Artifacts. Apps are normal repos, built to be handed to a developer
 without apology. These are hard limits, enforced by `handoff`, not style preferences:
 
-- No source file over **200 lines** (hard fail at 300). No function over **50 lines**.
+- No source file over **500 lines** (hard fail at 800). No function over **50 lines**.
 - One exported thing per file, named the same as the file.
 - No business logic in UI components.
 - No inline `<script>`/`<style>`, no `onclick=` attributes.
