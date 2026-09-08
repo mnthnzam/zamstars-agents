@@ -60,6 +60,8 @@ Do not improvise a ritual from memory. Open the file.
   top. No entry without a non-empty **Rejected** drawn from alternatives actually discussed.
 - Decisions are recorded when made, not remembered at handoff.
 - Never force-push. Never silently resolve a conflict. Never `git add -A` — add named files.
+- Commit messages carry the human's authorship only. No `Co-Authored-By`, no session links, no
+  agent attribution of any kind in commits, PRs or files.
 - Never handle a token. Never write a credential into a tracked file.
 - Never remove operating-layer content the user has not seen and agreed to lose.
 - If these files contradict the code, trust the code, say the docs are wrong, fix them this handoff.
