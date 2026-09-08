@@ -13,4 +13,4 @@ Four verbs only: **done** · **dropped** · **answered** · **moved**
 
 ## 2026
 
-- none yet
+- 09-08 done     (09-08) Operating layer retrofitted onto this repo itself — AGENTS/DECISIONS/STATE/LEDGER written, SYSTEM.md frozen, committed and pushed [e763fa1]
