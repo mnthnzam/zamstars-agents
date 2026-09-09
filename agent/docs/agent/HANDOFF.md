@@ -27,7 +27,11 @@
 7. Touch `README.md` only if how-to-run, stack, where it runs, or dependencies changed — or
    step 3 found a mismatch.
 8. Commit: `<verb>: <what> — <why>`. One commit per logical change. Add **named files** from the
-   status output — never `git add -A`. Terminal mode: one block per commit ending with
-   `git pull --rebase && git push`; ask for the output pasted back.
-9. `git pull --rebase`, push. Conflict → stop and surface it. Auth failure → SETUP.md step F4.
+   status output — never `git add -A`. Terminal mode: one block per commit, `add` + `commit`
+   only — **no pull or push until the last commit is made.** `git pull --rebase` refuses while
+   anything is unstaged, so a pull attached to the first of several commits fails on the files
+   the later commits still hold. Ask for the output pasted back after each.
+9. After the final commit, once: `git pull --rebase`, then push. Skip the pull if nobody else
+   pushes to the repo and you are already in sync. Conflict → stop and surface it. Auth failure
+   → SETUP.md step F4.
 10. Report: what was committed, what was pushed, what still needs a human.
