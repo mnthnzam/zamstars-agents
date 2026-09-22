@@ -29,6 +29,13 @@ The only permitted change to a past entry is a status line at its top:
 **Revisit if:** anything in `agent/` or `templates/` ever needs to be private again, or the bundled copy is found stale in the wild more than once.
 **Where:** `build.sh`, `agent/docs/agent/SETUP.md` → Getting the files
 
+## 2026-09-22 [process] — Handoff names foreign working-tree changes and pulls with `--autostash`
+**Context:** A handoff in a folder where another session had uncommitted edits failed at `git pull --rebase` ("You have unstaged changes"). Step 1 reads `git status` but said nothing about lines the handoff will not commit.
+**Chose:** Step 1: any such line is someone else's in-flight work — name it in the report, never stash, add or revert it. Step 9: `git pull --rebase --autostash`; a conflicting restore is a stop-and-surface.
+**Rejected:** `--autostash` alone — the pull succeeds but the collision with another session goes unmentioned. A manual `git stash` around the pull — the agent would be handling changes it does not own.
+**Revisit if:** an autostash restore conflict is seen in practice and the message was not enough to act on.
+**Where:** `agent/docs/agent/HANDOFF.md` steps 1 and 9
+
 ## 2026-09-08 [process] — Source files may run to 500 lines, hard fail at 800
 **Context:** 200/300 was set before any Zamstars app existed. It fires on JSX-heavy page
 components that are long without being complex, and a limit that fires on every form teaches the

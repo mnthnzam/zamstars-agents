@@ -339,6 +339,8 @@ overrides teaches that all the rules are optional.
    cannot surprise anyone.
 1. `git status --short`, `git diff`, `git diff --cached`. Summarize **what changed** from the
    diff, not from memory of the session.
+   Any status line you will not commit belongs to someone else's in-flight work. Name it in the
+   report; never stash, add or revert it.
 2. **Structure check — open `docs/agent/STRUCTURE.md` and follow it.** It carries the command,
    the exempt files, and how to split. In short: over 800 lines, split before committing, not as
    a follow-up; over 500, propose the split and record a DECISIONS entry if the user declines.
@@ -366,9 +368,11 @@ overrides teaches that all the rules are optional.
    only — **no pull or push until the last commit is made.** `git pull --rebase` refuses while
    anything is unstaged, so a pull attached to the first of several commits fails on the files
    the later commits still hold. Ask for the output pasted back after each.
-9. After the final commit, once: `git pull --rebase`, then push. Skip the pull if nobody else
-   pushes to the repo and you are already in sync. Conflict → stop and surface it. Auth failure
-   → SETUP.md step F4.
+9. After the final commit, once: `git pull --rebase --autostash`, then push. Skip the pull if
+   nobody else pushes to the repo and you are already in sync. `--autostash` carries foreign
+   changes across the pull and restores them; if the restore conflicts, git leaves them stashed
+   and says so — that is a stop-and-surface, not a fix. Conflict → stop and surface it. Auth
+   failure → SETUP.md step F4.
 10. Report: what was committed, what was pushed, what still needs a human.
 
 
