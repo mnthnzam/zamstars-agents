@@ -50,7 +50,7 @@ both exist.
 | Antigravity | copy `skills/*` into `~/.gemini/config/skills/` (all workspaces) or the repo's `.agents/skills/` |
 | Claude Cowork | add each `skills/*/SKILL.md` as a skill in the app |
 
-Private repo: you need collaborator access and git logged in to GitHub (`gh auth login`).
+The repo is public, so `setup` clones it from any shell with network — no path to give. `zamstars-setup` also bundles the app-repo files (`skills/zamstars-setup/files/` plus an appendix in its `SKILL.md`) for agents with no network.
 
 ## This repo runs its own system
 

@@ -22,6 +22,13 @@ The only permitted change to a past entry is a status line at its top:
 
 ---
 
+## 2026-09-22 [process] — Setup gets the app-repo files by cloning this public repo; the setup skill carries a fallback copy
+**Context:** Every `setup` in Claude Cowork stalled on "where is zamstars-agents on your Mac?" — the skills hold the rules, not the files an app repo must carry, and the repo was private so no sandbox could clone it.
+**Chose:** Repo made public. `SETUP.md` gains a "Getting the files" order: clone → bundled copy → a connected local clone, last. `build.sh` now copies `agent/` and `templates/` into `skills/zamstars-setup/files/` and appends the small files verbatim to that skill for single-file installs.
+**Rejected:** Keep the repo private and keep asking for a path — the question repeats every session and is the wrong default for a system whose point is that nothing needs installing. Embed every file, rituals included, in the setup skill — ~500 more lines in a skill that is opened once per repo, and a second copy to drift.
+**Revisit if:** anything in `agent/` or `templates/` ever needs to be private again, or the bundled copy is found stale in the wild more than once.
+**Where:** `build.sh`, `agent/docs/agent/SETUP.md` → Getting the files
+
 ## 2026-09-08 [process] — Source files may run to 500 lines, hard fail at 800
 **Context:** 200/300 was set before any Zamstars app existed. It fires on JSX-heavy page
 components that are long without being complex, and a limit that fires on every form teaches the

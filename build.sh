@@ -26,6 +26,22 @@ emit zamstars-setup \
   "Zamstars onboarding and scaffolding. Use when the user says setup / onboard me / first time / I'm new, wants to start a new Zamstars app or join one, or when pre-flight fails. Walks a newcomer from zero, picks the git mode, tests access before cloning, retrofits or scaffolds the operating layer." \
   "$A/SETUP.md"
 
+# --- zamstars-setup also carries the files an app repo needs, for agents with no network ---
+rm -rf skills/zamstars-setup/files
+mkdir -p skills/zamstars-setup/files/agent skills/zamstars-setup/files/templates
+cp -R agent/. skills/zamstars-setup/files/agent/
+cp -R templates/. skills/zamstars-setup/files/templates/
+{
+  printf '## Bundled files — for a single-file skill install (Claude Cowork)\n\n'
+  printf 'The small files below are verbatim; write each to the path shown, at the app repo root. Prefer cloning the public repo (see **Getting the files**) — this appendix is only as new as the installed skill. The ritual files (`docs/agent/*.md`) are not repeated here: `AGENTS.md`, `SHAPES.md`, `STRUCTURE.md`, `CATCHUP.md`, `HANDOFF.md` and `DECISION.md` are the sections of the `zamstars-ops` skill in that order, `SETUP.md` is this skill, `GROOM.md` opens the `zamstars-groom` skill. Split them at the `---` rules.\n\n'
+  for f in agent/CLAUDE.md agent/GEMINI.md agent/.cursor/rules/zamstars.mdc agent/.github/copilot-instructions.md agent/.windsurf/rules/zamstars.md templates/ONBOARDING.md templates/STATE.md templates/DECISIONS.md templates/LEDGER.md templates/README.md; do
+    dest="${f#agent/}"; dest="${dest#templates/}"
+    case "$f" in templates/ONBOARDING.md|templates/LEDGER.md) dest="docs/$dest";; esac
+    printf '### `%s`\n\n````markdown\n' "$dest"; cat "$f"; printf '\n````\n\n'
+  done
+} >> skills/zamstars-setup/SKILL.md
+echo "bundled $(find skills/zamstars-setup/files -type f | wc -l | tr -d ' ') files into skills/zamstars-setup/files/ and appended the appendix ($(wc -l < skills/zamstars-setup/SKILL.md) lines)"
+
 emit zamstars-groom \
   "Zamstars maintenance pass. Use when the user says groom, 'is this repo rotting', or when catchup reports STATE.md stale by more than two weeks. Full decay pass, Revisit-if and Where checks on every active decision, propose-don't-apply." \
   "$A/GROOM.md" "$A/SHAPES.md" "$A/STRUCTURE.md"
